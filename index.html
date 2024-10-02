@@ -50,6 +50,7 @@
             cursor: pointer;
         }
 
+        .sidebar ul li a.active,
         .sidebar ul li a:hover {
             background-color: #1e2c39;
         }
@@ -88,8 +89,29 @@
             display: none;
         }
 
-        .active {
+        .active-section {
             display: block;
+        }
+
+         /* Video embed styles */
+        .video-container {
+            position: relative;
+            padding-bottom: 25%; /* Maintain the 16:9 ratio */
+            height: 0;
+            width: 900px; /* Adjust the width of the video */
+            margin-bottom: 20px;
+            overflow: hidden;
+            float: left;
+            clear: left;
+            margin-right: 20px; /* Add spacing to the right */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 45px;
+            width: 90%;
+            height: 100%;
         }
 
         /* Mobile responsiveness */
@@ -107,6 +129,10 @@
             .main-content {
                 margin-left: 0;
             }
+
+            .video-container {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -120,9 +146,9 @@
             <li>
                 <a href="#">Configuration</a>
                 <ul class="sub-menu">
-                    <li><a href="#" onclick="showSection('step1')">Step 1: Setup Zoom Meeting</a></li>
-                    <li><a href="#" onclick="showSection('step2')">Step 2: Add Members to Zoom</a></li>
-                    <li><a href="#" onclick="showSection('step3')">Step 3: Joining Mastermind</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('step1')">Step 1: Setup Zoom Meeting</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('step2')">Step 2: Add Members to Zoom</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('step3')">Step 3: Joining Mastermind</a></li>
                 </ul>
             </li>
         </ul>
@@ -134,10 +160,10 @@
             <li>
                 <a href="#">Related Docs</a>
                 <ul class="sub-menu">
-                    <li><a href="#" onclick="showSection('join-mastermind')">How to Join Mastermind Session</a></li>
-                    <li><a href="#" onclick="showSection('access-dashboard')">How to Access Member Engagement Dashboard</a></li>
-                    <li><a href="#" onclick="showSection('deactivate-member')">How to Deactivate a Member</a></li>
-                    <li><a href="#" onclick="showSection('renew-subscription')">How to Renew Mastermind Subscription</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('join-mastermind')">How to Join Mastermind Session</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('access-dashboard')">How to Access Member Engagement Dashboard</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('deactivate-member')">How to Deactivate a Member</a></li>
+                    <li><a href="#" onclick="activateLink(this); showSection('renew-subscription')">How to Renew Mastermind Subscription</a></li>
                 </ul>
             </li>
         </ul>
@@ -162,6 +188,10 @@
                 <li>Click <strong>Save</strong> on the Step 3 Action.</li>
                 <li>Click <strong>Save</strong> in the upper right corner of the workflow.</li>
             </ul>
+            <!-- Video for Step 1 -->
+            <div class="video-container">
+                <iframe src="https://www.loom.com/embed/d8e17a37218e4e5d8b0a7abb089e85a6?sid=a5b012e0-41d7-422f-b11d-b75f7c9b1e82" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
         </div>
 
         <!-- Step 2: Adding Members to Zoom -->
@@ -173,6 +203,10 @@
                 <li>Add a tag like <strong>mastermind</strong> or any tag you pre-set in the <strong>Add Registrant to Zoom</strong> workflow.</li>
                 <li>They will then be added to Zoom as registrants automatically.</li>
             </ul>
+            <!-- Video for Step 2 -->
+            <div class="video-container">
+                <iframe src="https://www.loom.com/embed/8dfbb87382a74c89b5a75cdf52b8de40?sid=77a3ee4e-fb31-4333-a060-a8511e84f2fd" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
         </div>
 
         <!-- Step 3: Joining Mastermind Session -->
@@ -181,6 +215,10 @@
             <ul>
                 <li>After completing Steps 1 and 2, users will be able to join the mastermind session via <strong>sso.peterswain.com</strong> or using the <strong>redirect link</strong> found in their contact information in Rainmaker.</li>
             </ul>
+            <!-- Video for Step 3 -->
+            <div class="video-container">
+                <iframe src="https://www.loom.com/embed/90dbec6a74ff4fdb969aa5bf317f8e1e?sid=64f150b3-f1b8-4da0-a8f5-a5cbc4a4b978" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
         </div>
 
         <!-- Related Docs Section: How to Join Mastermind -->
@@ -235,14 +273,26 @@
         // Hide all sections
         var sections = document.querySelectorAll('.content-section');
         sections.forEach(function (section) {
-            section.classList.remove('active');
+            section.classList.remove('active-section');
             section.style.display = 'none';
         });
 
         // Show the selected section
         var selectedSection = document.getElementById(sectionId);
-        selectedSection.classList.add('active');
+        selectedSection.classList.add('active-section');
         selectedSection.style.display = 'block';
+    }
+
+    // Function to activate the clicked link
+    function activateLink(element) {
+        // Remove active class from all submenu links
+        var links = document.querySelectorAll('.sub-menu a');
+        links.forEach(function (link) {
+            link.classList.remove('active');
+        });
+
+        // Add active class to the clicked link
+        element.classList.add('active');
     }
 
     // Initialize the first section to be visible
